@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.EmployeeDao"><!-- 后面接的是接口名称 -->
+    <select id="getEmployee" resultType="com.pm.pojo.Employee">
+        SELECT *
+        FROM t_employee
+    </select>
+    
+    <select id="getEmployeeById" resultType="com.pm.pojo.Employee" parameterType="java.lang.String">
+        SELECT *
+        FROM t_employee
+        WHERE E_ID = #{e_id}
+    </select>
+    
+     <select id="getPeople" resultType="java.util.Map">
+        SELECT p.*,d.name d_name
+        FROM t_people p 
+        LEFT JOIN t_dept d
+        on p.d_id = d.d_id
+    </select>
+    
+     <select id="getPeopleById" resultType="java.util.Map" parameterType="java.lang.String">
+       SELECT *
+        FROM t_people
+        WHERE p_ID = #{p_id}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

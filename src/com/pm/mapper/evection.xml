@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.EvectionDao"><!-- 后面接的是接口名称 -->
+	<select id="getEvectionOfDay" resultType="java.util.Map" parameterType="java.lang.String">
+	   	SELECT t.o_city||'出差'  "title",t.o_outtime "start" ,t.o_backtime "end"  
+		FROM T_OUT t 
+	    WHERE t.e_id = #{e_id}
+		ORDER BY t.o_outtime
+	</select>
+	
+	<select id="getEvectionOfEvent" resultType="java.util.Map" parameterType="java.lang.String">
+	    select t.o_id,t.e_id,t.o_city,to_char(t.o_outtime,'DL') "O_OUTTIME",
+	    to_char(t.o_backtime,'DL') "O_BACKTIME", t.s_traffic,t.s_out,t.s_hotel
+		from t_out t
+	    WHERE t.e_id = #{e_id}
+	    ORDER BY t.o_outtime
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

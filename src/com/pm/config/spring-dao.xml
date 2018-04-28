@@ -22,10 +22,10 @@
 		<context:property-placeholder location="classpath:com/pm/config/jdbc.properties"/>
 		<!-- 加载数据源 -->
 		<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
-		p:driverClassName="${mysql.driver}"
-		p:url="${mysql.url}"
-		p:username="${mysql.username}"
-		p:password="${mysql.password}"></bean>
+		p:driverClassName="${oracle.driver}"
+		p:url="${oracle.url}"
+		p:username="${oracle.username}"
+		p:password="${oracle.password}"></bean>
 		<!-- mybatis-spring.jar中提供整合MyBatis的SqlSessionFactory  下面的datasource-ref指的是上方的数据源，下方是mybatis的配置文件的路径 -->
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
 			p:dataSource-ref="dataSource"

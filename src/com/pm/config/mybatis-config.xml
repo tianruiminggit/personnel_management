@@ -3,6 +3,9 @@
 <configuration>
 	<mappers>
 	    <mapper resource="com/pm/mapper/check.xml"/>
+	    <mapper resource="com/pm/mapper/employee.xml"/>
+	    <mapper resource="com/pm/mapper/evection.xml"/>
+	    <mapper resource="com/pm/mapper/salary.xml"/>
 	</mappers>
 </configuration>
 

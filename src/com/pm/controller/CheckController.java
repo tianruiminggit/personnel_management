@@ -49,7 +49,7 @@ public class CheckController {
 			Map m = new HashMap();
 			m.put("type", type);
 //			m.put("time", sdf2.format(new Date()));
-			m.put("id", request.getSession().getAttribute("eid")+sdf3.format(new Date()));
+			m.put("id", request.getSession().getAttribute("eid")+sdf3.format(new Date())+type);
 			m.put("eid", request.getSession().getAttribute("eid"));
 			checkService.insertCheck(m);
 		} catch (Exception e) {
