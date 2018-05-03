@@ -18,6 +18,13 @@ import com.pm.tool.EmployeeTool;
 public class LoginController {
 	@Autowired
 	private EmployeeService eService;
+	/***
+	 * µÇÂ¼Ç°Ô¤´¦Àí
+	 * @param e_id
+	 * @param e_pwd
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/preLogin")
 	@ResponseBody
 	public Object preLogin(String e_id,String e_pwd,HttpServletRequest request){
@@ -41,6 +48,11 @@ public class LoginController {
 		}
 		
 	}
+	/**
+	 * µÇÂ¼
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request){
 		return "shouye";

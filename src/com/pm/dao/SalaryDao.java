@@ -6,4 +6,8 @@ public interface SalaryDao {
 
 	List getSalaryById(String e_id);
 
+	List getSalaryCircle(String e_id);
+
+	List getSalaryLine(String e_id);
+
 }

@@ -40,22 +40,19 @@
 								<li class="dropdown">
 									<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>
 									<ul role="menu" class="dropdown-menu">
-										<li><a href="">菜单列表</a>
-										</li>
-										<li><a href="">菜单列表</a>
-										</li>
-										<li><a href="">菜单列表</a>
-										</li>
-										<li><a href="">菜单列表</a>
-										</li>
-									</ul>
+									<li><a href="${pageContext.request.contextPath}/employee/index.do">招聘/录用</a></li>
+									<li><a href="${pageContext.request.contextPath}/check/index.do">考勤</a></li>
+									<li><a href="${pageContext.request.contextPath}/salary/index.do">工资</a></li>
+									<li><a href="${pageContext.request.contextPath}/dispatch/index.do">员工调度</a></li>
+									<li><a href="${pageContext.request.contextPath}/evection/index.do">出差</a></li>
+								</ul>
 								</li>
 							</ul>
 							<ul class="nav navbar-top-links navbar-right" style="padding-right: 0;">
 								<li class="dropdown" style="padding-right: 0;">
-									<a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;"> 某某某 </a>
+									<a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;">${userAccount.getE_name() } </a>
 									<ul role="menu" class="dropdown-menu">
-										<li><a href="">菜单列表</a>
+										<li><a href="">个人信息</a>
 										</li>
 									</ul>
 								</li>
@@ -87,7 +84,13 @@
 									<!--<small>新订单</small>-->
 									<div class="example-wrap margin-sm-0">
 										<div class="example">
-											<table id="testTab" data-toggle="table" data-url="${pageContext.request.contextPath}/employee/getPeople.do" data-mobile-responsive="true" data-row-style="rowStyle" data-height="250">
+											<div class="btn-group hidden-xs" id="toolbar1" role="group">
+						                    	<button type="button" id="peopleAdd" class="btn btn-outline btn-default">
+						                        	<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+						                        </button>
+						                    </div>
+											<table id="peopleTab" data-row-style="rowStyle" data-height="300"></table>
+											<!-- <table id="testTab" data-toggle="table" data-url="${pageContext.request.contextPath}/employee/getPeople.do" data-mobile-responsive="true" data-row-style="rowStyle" data-height="250">
 												<thead>
 													<tr>
 														<th data-field="P_ID">ID</th>
@@ -98,7 +101,7 @@
 														<th data-field="IDCARD">身份证</th>
 													</tr>
 												</thead>
-											</table>
+											</table>-->
 										</div>
 									</div>
 								</div>
@@ -110,7 +113,7 @@
 							<div class="ibox float-e-margins">
 								<div class="ibox-title">
 									<span class="label label-info pull-right">全年</span>
-									<h5>求职者</h5>
+									<h5>公司近期加入员工</h5>
 								</div>
 								<div class="ibox-content">
 									<!--<h1 class="no-margins">275,800</h1>-->
@@ -119,8 +122,13 @@
 									<!--<small>新订单</small>-->
 									<div class="example-wrap margin-sm-0">
 										<div class="example">
-											<table id="tab_employ" data-toggle="table" data-url="${pageContext.request.contextPath}/employee/getEmployee.do" data-mobile-responsive="true" data-row-style="rowStyle" data-height="250">
-												<thead>
+											<div class="btn-group hidden-xs" id="toolbar" role="group">
+						                    	<button type="button" id="employeeAdd" class="btn btn-outline btn-default">
+						                        	<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+						                        </button>
+						                    </div>
+											<table id="employeeTab" data-mobile-responsive="true" data-row-style="rowStyle" data-height="300">
+												<!--  <thead>
 													<tr>
 														<th data-field="e_id">ID</th>
 														<th data-field="e_name">姓名</th>
@@ -130,7 +138,7 @@
 														<th data-field="e_job">职称</th>
 														<th data-field="e_time">入职时间</th>
 													</tr>
-												</thead>
+												</thead>-->
 											</table>
 										</div>
 									</div>
@@ -139,8 +147,12 @@
 						</div>
 					</div>
 					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" id="bt_hide" style="display: none">
-						开始演示模态框
+						雇员模态框
 					</button>
+					<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#peopleModal" id="bt_hide1" style="display: none">
+						新人模态框
+					</button>
+		<!-- 模态框表单 -->			
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -194,6 +206,56 @@
 			</div>
 			<!-- /.modal -->
 		</div>
+		<!-- 模态框表单 -->
+		<div class="modal fade" id="peopleModal" tabindex="-1" role="dialog" aria-labelledby="peopleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form action="" method="get">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+							<h4 class="modal-title" id="myModalLabel">
+							资料详情
+						</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-lg-7">
+									<form>
+									<label>编号</label>							
+									<input type="text" name="p_id" id="p_id" readonly="true">
+									<label>姓名</label>
+									<input type="text" id="p_name"  name="p_name">
+									<label>性别</label>
+									<input type="text" id="psex"  name="psex">
+									<label>部门</label>
+									<input type="text" id="pd_id" name="pd_id">
+									<label>联系电话</label>
+									<input type="text" id="p_tel"  name="p_tel">
+									<label>身份证</label>
+									<input type="text" id="pidcard"  name="pidcard" readonly="true">
+								</div>
+								<div class="col-lg-5"> 
+									<img src="img/a9.jpg" width="200px" height="200px"/>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="peopleDelete" type="button" class="btn btn-warning pull-left">淘汰
+							</button>
+							<button id="peopleEploy" type="button" class="btn btn-primary">
+							完成处理
+						</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
 				</div>
 				<div class="footer">
 					&copy;2018
@@ -204,11 +266,11 @@
 
 		<script>
 			$(function() {
-				$("#tab_employ").on('click-row.bs.table', function(e, row, element) {
+				$("#employeeTab").on('click-row.bs.table', function(e, row, element) {
 					//$(element).css({"color":"blue","font-size":"16px;"});  
 					$.ajax({
 						url:"${pageContext.request.contextPath}/employee/getEmployeeById.do",
-            			data:{"e_id":row.e_id},//携带参数
+            			data:{"e_id":row.E_ID},//携带参数
             			datatype:"json",
             			type:"post",
             			success:function(result){
@@ -228,8 +290,187 @@
 					});
 				});
 				
+				$("#peopleTab").on('click-row.bs.table', function(e, row, element) {
+					//$(element).css({"color":"blue","font-size":"16px;"});  
+					$.ajax({
+						url:"${pageContext.request.contextPath}/employee/getPeopleById.do",
+            			data:{"p_id":row.P_ID},//携带参数
+            			datatype:"json",
+            			type:"post",
+            			success:function(result){
+            				console.log(result);
+            				$("#p_id").val(result.P_ID);
+            				$("#p_name").val(result.P_NAME);
+            				$("#p_tel").val(result.P_TEL);
+            				$("#psex").val(result.PSEX);
+            				$("#pd_id").val(result.D_NAME);
+            				$("#pidcard").val(result.IDCARD);
+            				$("#p_time").val(result.p_time);
+            				$("#bt_hide1").click();
+            			}
+						
+					});
+				});
 				
-			})
+				
+				$("#peopleTab").bootstrapTable({
+					url:"${pageContext.request.contextPath}/employee/getPeople.do",	 //请求后台的URL（*）
+	                method: 'GET',                      //请求方式（*）
+	                striped: true,                      //是否显示行间隔色
+	                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+	                pagination: true,                   //是否显示分页（*）
+	                sortable: true,                     //是否启用排序
+	                toolbar:"#toolbar1",
+	                sortOrder: "asc",                   //排序方式
+	                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+	                pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	                pageSize: 3,                     //每页的记录行数（*）
+	                pageList: [3,5,10],        //可供选择的每页的行数（*）
+	                search: true,                      //是否显示表格搜索
+	                toobar:"#toobar",
+	                strictSearch: true,
+	                //showColumns: true,                  //是否显示所有的列（选择显示的列）
+	                //showRefresh: true,                  //是否显示刷新按钮
+	                clickToSelect: true,                //是否启用点击选中行
+	                //height: 500,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+	                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+	                //showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+	                //cardView: false,                    //是否显示详细视图
+	                //得到查询的参数
+	                queryParams : function (params) {
+	                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+	                    var temp = {   
+	                        rows: params.limit,                         //页面大小
+	                        page: (params.offset / params.limit) + 1,   //页码
+	                        //sort: params.sort,      //排序列名  
+	                        //sortOrder: params.order //排位命令（desc，asc） 
+	                    };
+	                    return temp;
+	                },
+	                columns: [{
+	                	field: "P_ID",
+						title: "编号",
+						align: "center"
+	                },{
+	                	field: "P_NAME",
+						title: "姓名",
+						align: "center"
+	                },{
+	                	field: "SEX",
+						title: "性别",
+						align: "center"
+	                },{
+	                	field: "P_TEL",
+						title: "联系电话",
+						align: "center"
+	                },{
+	                	field: "D_NAME",
+						title: "求职部门",
+						align: "center"
+	                },{
+	                	field: "IDCARD",
+						title: "身份证",
+						align: "center"
+	                }]
+				});
+				
+				
+				$("#employeeTab").bootstrapTable({
+					url:"${pageContext.request.contextPath}/employee/getEmployee.do",	 //请求后台的URL（*）
+	                method: 'GET',                      //请求方式（*）
+	                striped: true,                      //是否显示行间隔色
+	                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+	                pagination: true,                   //是否显示分页（*）
+	                sortable: true,                     //是否启用排序
+	                toolbar:"#toolbar",
+	                sortOrder: "asc",                   //排序方式
+	                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+	                pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+	                pageSize: 5,                     //每页的记录行数（*）
+	                pageList: [5,10,20],        //可供选择的每页的行数（*）
+	                search: true,                      //是否显示表格搜索
+	                strictSearch: true,
+	                //showColumns: true,                  //是否显示所有的列（选择显示的列）
+	                //showRefresh: true,                  //是否显示刷新按钮
+	                clickToSelect: true,                //是否启用点击选中行
+	                //height: 500,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+	                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+	                //showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+	                //cardView: false,                    //是否显示详细视图
+	                //得到查询的参数
+	                queryParams : function (params) {
+	                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+	                    var temp = {   
+	                        rows: params.limit,                         //页面大小
+	                        page: (params.offset / params.limit) + 1,   //页码
+	                    };
+	                    return temp;
+	                },
+	                columns: [{
+	                	field: "E_ID",
+						title: "编号",
+						align: "center"
+	                },{
+	                	field: "E_NAME",
+						title: "姓名",
+						align: "center"
+	                },{
+	                	field: "SEX",
+						title: "性别",
+						align: "center"
+	                },{
+	                	field: "E_TEL",
+						title: "联系电话",
+						align: "center"
+	                },{
+	                	field: "D_NAME",
+						title: "部门",
+						align: "center"
+	                },{
+	                	field: "E_JOB",
+						title: "职称",
+						align: "center"
+	                },{
+	                	field: "E_TIME",
+						title: "入职时间",
+						align: "center"
+	                }]
+				});
+			});
+			//删除新人
+			$("#peopleDelete").click(function(){
+				swal({
+					title:"淘汰",
+					text:"确定淘汰求职者:"+$("#p_name").val()+"("+$("#p_id").val()+")?",
+					type: "warning",
+					showCancelButton: true, 
+					confirmButtonColor: "#DD6B55",
+					confirmButtonText: "确定淘汰！", 
+					cancelButtonText: "取消淘汰！",
+					closeOnConfirm: false,
+					closeOnCancel:false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+							url:"${pageContext.request.contextPath}/employee/deletePeople.do",
+							data:{"p_id":$("#p_id").val()},
+							type:"post",
+							datatype:"json",
+							success:function(result){
+								if(result.msg==="success"){
+									swal("操作成功","","success");
+								}
+							}
+							
+						});
+					} else{
+						swal("取消","","error")
+					}
+				}
+				);
+			});
+			
 		</script>
 	</body>
 

@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pm.dao.SalaryDao"><!-- 后面接的是接口名称 -->
-	<select id="getSalaryById" parameterType="java.lang.String" resultType="java.util.Map">
-	    SELECT 	T.S_ID,
-       			T.E_ID,
-       			T.S_BASIC,
-		       	T.S_FOOD,
-		       	T.S_TRAFFIC,
-		       	T.S_HOTEL,
-		       	T.S_OUT,
-		       	T.S_CHECK,
-		       	TO_CHAR(T.S_DATE,'YYYY-MM') S_DATE,
-		       	T.S_TIME
+	<select id="getSalaryById" parameterType="java.lang.String"
+		resultType="java.util.Map">
+		SELECT T.S_ID,
+		T.E_ID,
+		T.S_BASIC,
+		T.S_FOOD,
+		T.S_TRAFFIC,
+		T.S_HOTEL,
+		T.S_OUT,
+		NVL(T.S_CHECK,0) S_CHECK,
+		TO_CHAR(T.S_DATE,'YYYY-MM') S_DATE,
+		T.S_TIME,
+		T.S_BASIC+T.S_FOOD+T.S_OUT+NVL(T.S_CHECK,0) S_SUM
 		FROM T_SALARY T
-	    WHERE T.E_ID=#{e_id} 
- 	</select>
+		WHERE T.E_ID=#{e_id}
+	</select>
+
+	<select id="getSalaryCircle" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT 	name "name",
+				value "value"
+		FROM
+			(SELECT T.S_BASIC "基础工资",
+				T.S_OUT "出差补贴",
+				T.S_FOOD "餐费补贴",
+				NVL(T.S_CHECK,0) "奖金"
+			FROM T_SALARY T
+			WHERE T.E_ID=#{e_id}
+				) 
+		UNPIVOT(VALUE FOR NAME IN("基础工资","出差补贴","餐费补贴","奖金"))
+	</select>
+	
+	<select id="getSalaryLine" parameterType="java.lang.String" resultType="java.util.Map">
+	    SELECT * FROM(
+			SELECT MON.ID,nvl(SAL.S_BASIC+SAL.S_FOOD+sal.s_out,0) sal
+			FROM T_MONTHS MON LEFT JOIN (SELECT * FROM T_SALARY WHERE E_ID=#{e_id}) SAL
+			ON MON.ID = EXTRACT(MONTH FROM SAL.S_TIME)
+			order by MON.ID) 
+		PIVOT (SUM(SAL) FOR ID IN(1,2,3,4,5,6,7,8,9,10,11,12))
+	</select>
 </mapper>
 
 

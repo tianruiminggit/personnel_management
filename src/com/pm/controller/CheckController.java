@@ -24,7 +24,11 @@ import com.pm.service.CheckService;
 public class CheckController {
 	@Autowired
 	private CheckService checkService;
-
+	/***
+	 * 页面展示,传输查询数据
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/index")
 	public ModelAndView check(HttpServletRequest request){
 		ModelAndView mv =new ModelAndView();
@@ -34,7 +38,11 @@ public class CheckController {
 		request.getSession().setAttribute("eid", "zs00001");
 		return mv;
 	}
-	
+	/***
+	 * 打卡功能(添加)
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/insertCheck")
 	@ResponseBody
 	public Object insertCheck(HttpServletRequest request){
@@ -71,6 +79,10 @@ public class CheckController {
 		m.put("type", "success");
 		return m;
 	}
+	/**
+	 * 查询
+	 * @return
+	 */
 	@RequestMapping("getCheck")
 	@ResponseBody
 	public List getCheck(){

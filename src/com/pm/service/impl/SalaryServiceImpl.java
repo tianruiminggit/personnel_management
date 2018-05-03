@@ -18,5 +18,15 @@ public class SalaryServiceImpl implements SalaryService{
 		// TODO Auto-generated method stub
 		return salaryDao.getSalaryById(e_id);
 	}
+	@Override
+	public List getSalaryCircle(String e_id) {
+		// TODO Auto-generated method stub
+		return salaryDao.getSalaryCircle(e_id);
+	}
+	@Override
+	public List getSalaryLine(String e_id) {
+		// TODO Auto-generated method stub
+		return salaryDao.getSalaryLine(e_id);
+	}
 
 }
