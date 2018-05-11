@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pm.pojo.Employee;
+import com.pm.pojo.People;
 
 public interface EmployeeDao {
 
@@ -20,5 +21,20 @@ public interface EmployeeDao {
 	List getEmployee(Map<String, Object> param);
 
 	int deletePeople(String p_id);
+
+	int addPeople(People people);
+
+	int updateEmp(Employee emp);
+
+	List getDept();
+
+	List getEmployeeBar();
+
+	int upIMG(Map<String, Object> param);
+
+	Map<String, Object> getIMG(Map<String, Object> param);
+
+	int employePeople(Map<String, Object> param);
+
 
 }

@@ -4,7 +4,6 @@
 <%@include file="../../myjs.jsp" %> 
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +24,7 @@
 	</head>
 
 	<body class="gray-bg top-navigation">
+<%@include file="../../personal.jsp" %>
 		<div id="wrapper">
 			<div id="page-wrapper" class="gray-bg">
 				<div class="row border-bottom white-bg">
@@ -40,7 +40,7 @@
 								<li class="dropdown">
 									<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>
 									<ul role="menu" class="dropdown-menu">
-									<li><a href="${pageContext.request.contextPath}/employee/index.do">招聘/录用</a></li>
+									<li><a href="${pageContext.request.contextPath}/employee/index.do">人事管理</a></li>
 									<li><a href="${pageContext.request.contextPath}/check/index.do">考勤</a></li>
 									<li><a href="${pageContext.request.contextPath}/salary/index.do">工资</a></li>
 									<li><a href="${pageContext.request.contextPath}/dispatch/index.do">员工调度</a></li>
@@ -52,12 +52,12 @@
 								<li class="dropdown" style="padding-right: 0;">
 									<a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;">${userAccount.getE_name() } </a>
 									<ul role="menu" class="dropdown-menu">
-										<li><a href="">个人信息</a>
+										<li><a href="" data-toggle="modal" data-target="#personal">个人信息</a>
 										</li>
 									</ul>
 								</li>
 								<li class="dropdown-menu-right">
-									<img src="img/a2.jpg" class="main_touxiang" />
+									<img src="${ pageContext.request.contextPath}/img/${userAccount.e_id }/touxiang.png" class="main_touxiang" />
 								</li>
 								<li>
 									<a href="login.html">
@@ -85,7 +85,7 @@
 									<div class="example-wrap margin-sm-0">
 										<div class="example">
 											<div class="btn-group hidden-xs" id="toolbar1" role="group">
-						                    	<button type="button" id="peopleAdd" class="btn btn-outline btn-default">
+						                    	<button type="button" id="peopleAdd" data-toggle="modal" data-target="#addPeopleModal" class="btn btn-outline btn-default">
 						                        	<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
 						                        </button>
 						                    </div>
@@ -222,19 +222,18 @@
 						<div class="modal-body">
 							<div class="row">
 								<div class="col-lg-7">
-									<form>
 									<label>编号</label>							
 									<input type="text" name="p_id" id="p_id" readonly="true">
 									<label>姓名</label>
 									<input type="text" id="p_name"  name="p_name">
 									<label>性别</label>
-									<input type="text" id="psex"  name="psex">
+									<input type="text" id="psex"  name="sex">
 									<label>部门</label>
 									<input type="text" id="pd_id" name="pd_id">
 									<label>联系电话</label>
 									<input type="text" id="p_tel"  name="p_tel">
 									<label>身份证</label>
-									<input type="text" id="pidcard"  name="pidcard" readonly="true">
+									<input type="text" id="pidcard"  name="idcard">
 								</div>
 								<div class="col-lg-5"> 
 									<img src="img/a9.jpg" width="200px" height="200px"/>
@@ -247,7 +246,56 @@
 							<button id="peopleDelete" type="button" class="btn btn-warning pull-left">淘汰
 							</button>
 							<button id="peopleEploy" type="button" class="btn btn-primary">
-							完成处理
+							雇用
+						</button>
+						</div>
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+		<!-- 模态框表单 -->
+		<div class="modal fade" id="addPeopleModal" tabindex="-1" role="dialog" aria-labelledby="peopleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="form_addPeople" action="" method="get">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+							<h4 class="modal-title" id="myModalLabel">
+							资料详情
+						</h4>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-lg-7">
+									<form>
+									<label>姓名</label>
+									<input type="text" name="p_name" class="form-control uname" required="">
+									<label>性别</label>
+									<select name="sex">
+										<option value="1">男</option>
+										<option value="2">女</option>
+									</select>
+									<label>部门</label>
+									<input type="text" name="d_id">
+									<label>联系电话</label>
+									<input type="text" name="p_tel" class="form-control uname" required="">
+									<label>身份证</label>
+									<input type="text" name="pidcard" class="form-control uname" required="">
+								</div>
+								<div class="col-lg-5"> 
+									<img src="img/a9.jpg" width="200px" height="200px"/>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button id="addPeople" type="button" class="btn btn-primary">
+							添加
 						</button>
 						</div>
 					</form>
@@ -327,9 +375,8 @@
 	                pageSize: 3,                     //每页的记录行数（*）
 	                pageList: [3,5,10],        //可供选择的每页的行数（*）
 	                search: true,                      //是否显示表格搜索
-	                toobar:"#toobar",
 	                strictSearch: true,
-	                //showColumns: true,                  //是否显示所有的列（选择显示的列）
+	                showColumns: true,                  //是否显示所有的列（选择显示的列）
 	                //showRefresh: true,                  //是否显示刷新按钮
 	                clickToSelect: true,                //是否启用点击选中行
 	                //height: 500,                      //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
@@ -458,9 +505,9 @@
 							type:"post",
 							datatype:"json",
 							success:function(result){
-								if(result.msg==="success"){
+								if(result.msg=="success"){
 									swal("操作成功","","success");
-								}
+								}else swal("添加失败","error");
 							}
 							
 						});
@@ -469,6 +516,42 @@
 					}
 				}
 				);
+			});
+			//添加新人
+			$("#addPeople").click(function(){
+				$.ajax({
+					url:"${pageContext.request.contextPath}/employee/addPeople.do",
+					data:$("#form_addPeople").serialize(),
+					datatype:"json",
+					type:"post",
+					success:function(reuslt){
+						if(result.msg=="success"){
+							swal("操作成功","","success");
+						}else swal("添加失败","error");
+					}
+				});
+			});
+			
+			$("#peopleEploy").click(function(){
+				swal({
+					title:"选择录用部门",
+					text:"<select id='selectdept'><option value='1001'>财务部</option><option value='1002'>人事部</option></select>",
+					html:true,
+					showCancelButton: true,
+					cancelButtonText: "取消",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					$.ajax({
+						url:"${pageContext.request.contextPath}/employee/employePeople.do?d_id="+$("#selectdept").val(),
+						data:{test1:"test1",test2:"test2"},
+						datatype:"json",
+						type:"post",
+						success:function(data){
+							
+						}
+					})
+				});
 			});
 			
 		</script>

@@ -4,18 +4,33 @@
 	<select id="getEmployee" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		<if test="top == null and bottom == null">
-			SELECT e.*,d.name d_name
+			SELECT e.e_id,e.e_name,e.e_tel,e.d_id,e.e_job,e.e_pwd,e.sex,e.e_time,e.idcard,e.e_type,d.name d_name
 			FROM t_employee e left join t_dept d
 			on e.d_id=d.d_id
+			<if test="d_id !=null">
+			    where e.d_id=#{d_id}
+			</if>
 		</if>
-		<if test="top!=null">
+		<if test="top!=null and d_id==null">
 		    <![CDATA[
 		    select * from(
 				select t.*,rownum rnum from(
-					SELECT p.*,d.name d_name
-					FROM t_employee p
+					SELECT e.e_id,e.e_name,e.e_tel,e.d_id,e.e_job,e.e_pwd,e.sex,e.e_time,e.idcard,e.e_type,d.name d_name
+					FROM t_employee e
 					LEFT JOIN t_dept d
-					on p.d_id = d.d_id )t where rownum<=#{top}) 
+					on e.d_id = d.d_id )t where rownum<=#{top}) 
+			p where p.rnum>#{bottom}
+			]]>
+		</if>
+		<if test="d_id !=null and top!=null">
+		    <![CDATA[
+		    select * from(
+				select t.*,rownum rnum from(
+					SELECT e.e_id,e.e_name,e.e_tel,e.d_id,e.e_job,e.e_pwd,e.sex,e.e_time,e.idcard,e.e_type,d.name d_name
+					FROM t_employee e
+					LEFT JOIN t_dept d
+					on e.d_id = d.d_id
+					where e.d_id = #{d_id} )t where rownum<=#{top}) 
 			p where p.rnum>#{bottom}
 			]]>
 		</if>
@@ -65,6 +80,39 @@
 	    delete from t_people
 	    where p_id=#{p_id}
 	</delete>
+	
+	<insert id="addPeople" parameterType="com.pm.pojo.People">
+	    insert into t_people 
+	    values('',#{p_name},#{p_tel},#{d_id},#{idcard},#{sex})
+	</insert>
+	
+	<update id="updateEmp" parameterType="com.pm.pojo.Employee">
+		update t_employee
+		set e_name=#{e_name},e_tel=#{e_tel},idcard=#{idcard}
+		where e_id=#{e_id}	    
+	</update>
+	
+	<select id="getDept" resultType="Map">
+	    select * from t_dept
+	</select>
+	
+	<select id="getEmployeeBar" resultType="Map">
+	    select name,e.value from t_dept d left join
+       (select d_id,count(d_id) value from t_employee group by d_id) e on d.d_id=e.d_id
+	</select>
+	
+	<update id="upIMG" parameterType="java.util.Map">
+	    update t_employee set e_pic=#{img} where e_id=#{e_id}
+	</update>
+	
+	<select id="getIMG" resultType="java.util.Map" parameterType="java.util.Map">
+	    select e_pic from t_employee
+	    where e_id=#{e_id}
+	</select>
+	
+	<insert id="employePeople" parameterType="Map">
+	    insert into t_employee values('',#{p_name},#{p_tel},#{d_id},3,'123','',#{sex},sysdate,#{idcard})
+	</insert>
 </mapper>
 
 

@@ -43,7 +43,14 @@ public class LoginController {
 			map.put("type", "success");
 			map.put("msg","µÇÂ¼³É¹¦");
 			request.getSession().setAttribute("userAccount", employee);
+			request.getSession().setAttribute("dept", eService.getDept());
 			EmployeeTool.init(request);
+			HashMap<String, Object> param = new HashMap<>();
+			param.put("e_id", employee.getE_id());
+//			EmployeeTool.getIMG(eService.getIMG(param));
+			if(eService.getIMG(param)!=null){
+				EmployeeTool.getIMG(eService.getIMG(param));
+			}
 			return map;
 		}
 		

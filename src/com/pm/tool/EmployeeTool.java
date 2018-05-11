@@ -1,5 +1,14 @@
 package com.pm.tool;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.pm.pojo.Employee;
@@ -7,15 +16,60 @@ import com.pm.pojo.Employee;
 public class EmployeeTool {
 
 	private static Employee employee;
+	private static String fileName;
+	private static String filePath;
 	
 	public static void init(HttpServletRequest request){
 		employee = new Employee();
 		if(request.getSession().getAttribute("userAccount")!=null)
 			employee=(Employee) request.getSession().getAttribute("userAccount");
+			filePath = request.getSession().getServletContext().getRealPath("/")+"img/"+employee.getE_id();
+			fileName=filePath+"/touxiang.png";
 	}
 
 	public static String getE_id() {
 		return employee.getE_id();
+	}
+	public static String getE_job(){
+		return employee.getE_job();
+	}
+	public static String getFileName(){
+		return fileName;
+	}
+	
+	public static void getIMG(Map<String, Object> param){
+		InputStream in = null;
+		if(param.get("E_PIC") != null){
+			File path = new File(filePath);
+			if(!path.exists()) path.mkdirs();
+			String fileName = EmployeeTool.getFileName();
+			java.sql.Blob b = (Blob) param.get("E_PIC");
+			System.out.println(fileName);
+			try {
+				byte [] bytes = new byte[(int)b.length()];
+				in = b.getBinaryStream();
+				in.read(bytes);
+				File file = new File(fileName);
+				FileOutputStream out = new FileOutputStream(file);
+				out.write(bytes);
+				out.flush();
+				out.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					in.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
 	}
 	/*public static void setE_id(String e_id) {
 		this.e_id = e_id;

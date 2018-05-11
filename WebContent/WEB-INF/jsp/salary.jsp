@@ -15,10 +15,18 @@
 	width: 45px;
 	height: 45px;
 }
+label {
+	display: block;
+}
+
+form input {
+	width: 70%;
+}
 </style>
 </head>
 
 <body class="gray-bg top-navigation">
+<%@include file="../../personal.jsp" %>
 	<div id="wrapper">
 		<div id="page-wrapper" class="gray-bg">
 			<div class="row border-bottom white-bg">
@@ -33,28 +41,28 @@
 					</div>
 					<div class="navbar-collapse collapse" id="navbar">
 						<ul class="nav navbar-nav">
-							<li class="dropdown"><a aria-expanded="false" role="button"
-								href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单
-									<span class="caret"></span>
-							</a>
-								<ul role="menu" class="dropdown-menu">
-									<li><a href="${pageContext.request.contextPath}/employee/index.do">招聘/录用</a></li>
+								<li class="dropdown">
+									<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>
+									<ul role="menu" class="dropdown-menu">
+									<li><a href="${pageContext.request.contextPath}/employee/index.do">人事管理</a></li>
 									<li><a href="${pageContext.request.contextPath}/check/index.do">考勤</a></li>
 									<li><a href="${pageContext.request.contextPath}/salary/index.do">工资</a></li>
 									<li><a href="${pageContext.request.contextPath}/dispatch/index.do">员工调度</a></li>
 									<li><a href="${pageContext.request.contextPath}/evection/index.do">出差</a></li>
-								</ul></li>
-						</ul>
-						<ul class="nav navbar-top-links navbar-right"
-							style="padding-right: 0;">
-							<li class="dropdown" style="padding-right: 0;"><a
-								aria-expanded="false" role="button" href="#"
-								data-toggle="dropdown" style="padding-right: 0;"> ${userAccount.getE_name() } </a>
-								<ul role="menu" class="dropdown-menu">
-									<li><a href="">个人信息</a></li>
-								</ul></li>
-							<li class="dropdown-menu-right"><img src="img/a2.jpg"
-								class="main_touxiang" /></li>
+								</ul>
+								</li>
+							</ul>
+							<ul class="nav navbar-top-links navbar-right" style="padding-right: 0;">
+								<li class="dropdown" style="padding-right: 0;">
+									<a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;">${userAccount.getE_name() } </a>
+									<ul role="menu" class="dropdown-menu">
+										<li><a href="" data-toggle="modal" data-target="#personal">个人信息</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-menu-right">
+									<img src="${ pageContext.request.contextPath}/img/${userAccount.e_id }/touxiang.png" class="main_touxiang" />
+								</li>
 							<li><a href="login.html"> <i class="fa fa-sign-out"></i>
 									退出
 							</a></li>

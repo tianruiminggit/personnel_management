@@ -15,10 +15,18 @@
 	    		width: 45px;
 	    		height: 45px;
 	    	}
+	    	label {
+	display: block;
+}
+
+form input {
+	width: 70%;
+}
 	    </style>
 	</head>
 
 	<body class="gray-bg top-navigation">
+	<%@include file="../../personal.jsp" %>
 		<div id="wrapper">
 	        <div id="page-wrapper" class="gray-bg">
 	            <div class="row border-bottom white-bg">
@@ -31,28 +39,28 @@
 						</div>
 						 <div class="navbar-collapse collapse" id="navbar">
                          	<ul class="nav navbar-nav">
-	                            <li class="dropdown">
-	                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>
-	                               <ul role="menu" class="dropdown-menu">
-									<li><a href="${pageContext.request.contextPath}/employee/index.do">招聘/录用</a></li>
+								<li class="dropdown">
+									<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 菜单 <span class="caret"></span></a>
+									<ul role="menu" class="dropdown-menu">
+									<li><a href="${pageContext.request.contextPath}/employee/index.do">人事管理</a></li>
 									<li><a href="${pageContext.request.contextPath}/check/index.do">考勤</a></li>
 									<li><a href="${pageContext.request.contextPath}/salary/index.do">工资</a></li>
 									<li><a href="${pageContext.request.contextPath}/dispatch/index.do">员工调度</a></li>
 									<li><a href="${pageContext.request.contextPath}/evection/index.do">出差</a></li>
 								</ul>
-	                            </li>
-                           </ul>
-                           <ul class="nav navbar-top-links navbar-right" style="padding-right: 0;">
-                           		<li class="dropdown" style="padding-right: 0;">
-	                                <a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;"> ${userAccount.getE_name() } </a>
-	                            	<ul role="menu" class="dropdown-menu">
-	                            		<li><a href="">个人信息</a>
-	                                    </li>
-	                            	</ul>
-	                            </li>
-	                            <li class="dropdown-menu-right">
-	                            	<img src="img/a2.jpg" class="main_touxiang" />
-	                            </li>
+								</li>
+							</ul>
+							<ul class="nav navbar-top-links navbar-right" style="padding-right: 0;">
+								<li class="dropdown" style="padding-right: 0;">
+									<a aria-expanded="false" role="button" href="#" data-toggle="dropdown" style="padding-right: 0;">${userAccount.getE_name() } </a>
+									<ul role="menu" class="dropdown-menu">
+										<li><a href="" data-toggle="modal" data-target="#personal">个人信息</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown-menu-right">
+									<img src="${ pageContext.request.contextPath}/img/${userAccount.e_id }/touxiang.png" class="main_touxiang" />
+								</li>
 	                            <li>
 	                                <a href="login.html">
 	                                    <i class="fa fa-sign-out"></i> 退出
@@ -73,7 +81,7 @@
 	                                <div class="ibox-content">
 	                                	<div align="center">
 	                                		<a href="${pageContext.request.contextPath}/employee/index.do">
-	                                			<img src="img/招聘录用.png"/>
+	                                			<img src="${pageContext.request.contextPath}/img/招聘录用.png"/>
 	                                		</a>
 	                                	</div>
 	                                </div>
@@ -87,7 +95,7 @@
 	                                <div class="ibox-content">
 	                                	<div align="center">
 	                                		<a href="${pageContext.request.contextPath}/check/index.do">
-	                                			<img src="img/签到.png"/>
+	                                			<img src="${pageContext.request.contextPath}/img/签到.png"/>
 	                                		</a>
 	                                	</div>
 	                                </div>
@@ -102,7 +110,7 @@
 	                                <div class="ibox-content">
 	                                	<div align="center">
 	                                		<a href="${pageContext.request.contextPath}/salary/index.do">
-	                                			<img src="img/钱.png"/>
+	                                			<img src="${pageContext.request.contextPath}/img/钱.png"/>
 	                                		</a>
 	                                	</div>
 	                                </div>
@@ -117,7 +125,7 @@
 	                                <div class="ibox-content">
 	                                	<div align="center">
 	                                		<a href="${pageContext.request.contextPath}/dispatch/index.do">
-	                                			<img src="img/人事调动.png"/>
+	                                			<img src="${pageContext.request.contextPath}/img/人事调动.png"/>
 	                                		</a>
 	                                	</div>
 	                                </div>
@@ -132,7 +140,7 @@
 	                                <div class="ibox-content">
 	                                	<div align="center">
 	                                		<a href="${pageContext.request.contextPath}/evection/index.do">
-	                                			<img src="img/出差记录.png"/>
+	                                			<img src="${pageContext.request.contextPath}/img/出差记录.png"/>
 	                                		</a>
 	                                	</div>
 	                                </div>
@@ -150,7 +158,18 @@
 			</div>
 		</div>
 		<script>
-			
+			$(function(){
+				if("${msg.upmsg}"!=""){
+					if("${msg.upmsg}"=="success") swal({
+						title:"修改头像成功",
+						type:"success"
+						},
+						function(isConfirm){
+						})
+					else if("${msg.upmsg}"=="failed")	swal("修改头像失败","","error")
+					else swal("${msg.upmsg}","","error")
+				}
+			})
 		</script>
 	</body>
 
