@@ -18,8 +18,10 @@ public class EmployeeTool {
 	private static Employee employee;
 	private static String fileName;
 	private static String filePath;
+	private static HttpServletRequest myRequest;
 	
 	public static void init(HttpServletRequest request){
+		myRequest = request;
 		employee = new Employee();
 		if(request.getSession().getAttribute("userAccount")!=null)
 			employee=(Employee) request.getSession().getAttribute("userAccount");
@@ -36,7 +38,9 @@ public class EmployeeTool {
 	public static String getFileName(){
 		return fileName;
 	}
-	
+	public static HttpServletRequest getMyRequest(){
+		return myRequest;
+	}
 	public static void getIMG(Map<String, Object> param){
 		InputStream in = null;
 		if(param.get("E_PIC") != null){

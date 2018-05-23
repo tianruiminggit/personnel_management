@@ -134,7 +134,7 @@ form input {
 													<div class="ibox float-e-margins">
 														<div class="ibox-title">
 															<span class="label label-info pull-right">全年</span>
-															<h5>公司近期加入员工</h5>
+															<h5>公司员工</h5>
 														</div>
 														<div class="ibox-content">
 															<!--<h1 class="no-margins">275,800</h1>-->
@@ -143,14 +143,14 @@ form input {
 															<!--<small>新订单</small>-->
 															<div class="example-wrap margin-sm-0">
 																<div class="example">
-																	<div class="btn-group hidden-xs" id="toolbar"
+																	<!-- <div class="btn-group hidden-xs" id="toolbar"
 																		role="group">
 																		<button type="button" id="employeeAdd"
 																			class="btn btn-outline btn-default">
 																			<i class="glyphicon glyphicon-plus"
 																				aria-hidden="true"></i>
 																		</button>
-																	</div>
+																	</div>-->
 																	<table id="employeeTab" data-mobile-responsive="true"
 																		data-row-style="rowStyle" data-height="300">
 																		<!--  <thead>
@@ -325,6 +325,8 @@ form input {
 																<li class=""><a data-toggle="tab" onclick="employeeByDept(${d.D_ID})"
 																href="#tab-${d.D_ID }" aria-expanded="true"> ${d.NAME }</a></li>
 															</c:forEach>
+															<li class=""><a id="add-dept" data-toggle="tab"
+																href="" aria-expanded="true"> <i class="fa fa-plus"></i>添加部门</a></li>
 														</ul>
 														<div class="tab-content">
 															<div id="tab-dept" class="tab-pane active">
@@ -496,7 +498,6 @@ form input {
 								cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 								pagination : true, //是否显示分页（*）
 								sortable : true, //是否启用排序
-								toolbar : "#toolbar",
 								sortOrder : "asc", //排序方式
 								sidePagination : "server", //分页方式：client客户端分页，server服务端分页（*）
 								pageNumber : 1, //初始化加载第一页，默认第一页,并记录
@@ -707,7 +708,6 @@ form input {
 						cache : false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 						pagination : true, //是否显示分页（*）
 						sortable : true, //是否启用排序
-						toolbar : "#toolbar",
 						sortOrder : "asc", //排序方式
 						sidePagination : "server", //分页方式：client客户端分页，server服务端分页（*）
 						pageNumber : 1, //初始化加载第一页，默认第一页,并记录
@@ -762,6 +762,38 @@ form input {
 							align : "center"
 						} ]
 					});
+			
+			$("#add-dept").click(function(){
+				swal({
+					title:"添加新部门",
+					text:"请输入新部门名称",
+					type:"input",
+					showCancelButton:true,
+                    closeOnConfirm: false
+				},
+				function(inputValue){
+					if(inputValue===false) return false;
+					else if(inputValue===""){
+                		swal.showInputError("请输入部门名称！")
+                		return false;
+                	}
+					else $.ajax({
+						url:"${pageContext.request.contextPath}/dept/insertDept.do",
+						type:"get",
+						data:{d_name:inputValue},
+						datatype:"json",
+						success:function(result){
+							swal({
+								title:result.msg,
+								type:result.type
+							},
+							function(){
+								location.reload();
+							})
+						}
+					});
+				})
+			});
 		}
 	</script>
 </body>

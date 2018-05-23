@@ -1,11 +1,16 @@
 package com.pm.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,5 +53,12 @@ public class EvectionController {
 		List list = new ArrayList<>();
 		list = eService.getEvectionOfEvent("zs000001");
 		return list;
+	}
+	
+	@RequestMapping("/insertEvection")
+	public Object insertEvection(@RequestParam Map<String, Object> param){
+		Map<String, Object> result = new HashMap<String,Object>();
+		int i = eService.insertEvection(param);
+		return result;
 	}
 }

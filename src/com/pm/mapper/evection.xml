@@ -15,6 +15,10 @@
 	    WHERE t.e_id = #{e_id}
 	    ORDER BY t.o_outtime
 	</select>
+	
+	<insert id="insertEvection" parameterType="Map">
+	    insert into t_out values('00',#{e_id},#{o_city},#{o_outtime},#{o_backtime},#{s_traffic},#{s_out},#{s_hotel})
+	</insert>
 </mapper>
 
 

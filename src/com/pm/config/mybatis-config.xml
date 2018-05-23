@@ -6,6 +6,8 @@
 	    <mapper resource="com/pm/mapper/employee.xml"/>
 	    <mapper resource="com/pm/mapper/evection.xml"/>
 	    <mapper resource="com/pm/mapper/salary.xml"/>
+	    <mapper resource="com/pm/mapper/dispatch.xml"/>
+	    <mapper resource="com/pm/mapper/dept.xml"/>
 	</mappers>
 </configuration>
 

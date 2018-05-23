@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.DispatchDao"><!-- 后面接的是接口名称 -->
+	<select id="getDispatchById" parameterType="java.lang.String" resultType="Map">
+	    select T.*,d.name ndname from(
+			select DIS.*,DEPT.NAME ODNAME from t_dispatch DIS 
+			left join t_dept DEPT ON DIS.D_OLD=DEPT.D_ID where DIS.E_ID=#{e_id}) T  
+			left join t_dept d on d.d_id=t.d_new
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

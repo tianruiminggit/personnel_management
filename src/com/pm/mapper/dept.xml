@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.dao.DeptDao"><!-- 后面接的是接口名称 -->
+	<select id="getDept" parameterType="Map" resultType="Map">
+	    select * from t_dept
+	    <where>
+	        <if test="d_id!=null">
+	            d_id=#{d_id}
+	        </if>
+	        <if test="d_name!=null">
+	            and name=#{d_name}
+	        </if>
+	    </where>
+	</select>
+	
+	<insert id="insertDept" parameterType="Map">
+	    insert into t_dept values(0,#{d_name})
+	</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
